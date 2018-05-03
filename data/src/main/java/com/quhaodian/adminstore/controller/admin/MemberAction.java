@@ -1,5 +1,6 @@
 package com.quhaodian.adminstore.controller.admin;
 
+import com.quhaodian.adminstore.utils.CompressImg;
 import com.quhaodian.data.utils.FilterUtils;
 import com.quhaodian.user.data.entity.UserAccount;
 import com.quhaodian.user.data.entity.UserRole;
@@ -24,11 +25,20 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.quhaodian.data.page.Order;
 import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.annotation.Scope;
 
+import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by imake on 2017年08月29日17:08:12.
@@ -199,6 +209,51 @@ public class MemberAction {
             redirectAttributes.addFlashAttribute("erro", "该条数据不能删除，请先删除和他相关的类容!");
         }
         return view;
+    }
+
+    /*修改用户头像*/
+    @RequiresPermissions("member")
+    @RequestMapping(value = "/admin/member/updateAvatar",method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String updateAvatar(MultipartFile fileToUpload, HttpServletRequest request){
+        String serverPath = request.getSession()
+                .getServletContext().getRealPath("/");
+        String fileName = UUID.randomUUID().toString();
+        String path = "dist/img/";
+        File dir = new File(serverPath + "dist/img");
+        if (!dir.exists() && !dir.isDirectory()) {
+            dir.mkdir();
+        }
+        String suffix = fileToUpload.getOriginalFilename().substring(fileToUpload.getOriginalFilename().lastIndexOf(".")+1);
+        String httpPath = path + fileName + "." + suffix;
+        String imgFilePath = serverPath + httpPath;
+        File file = new File(imgFilePath);
+        try {
+            fileToUpload.transferTo(file);
+        } catch (IOException e) {
+            log.error("文件转换错误",e);
+            return "error";
+        }
+        BufferedImage srcImage;
+        try {
+            FileInputStream in = new FileInputStream(imgFilePath);
+            srcImage = javax.imageio.ImageIO.read(in);
+        } catch (IOException e) {
+            log.error("读取图片文件出错",e);
+            return "error";
+        }
+        if(srcImage != null){
+            String fileName2 =fileName+"_smaller";
+            String outImgPath=serverPath+path + fileName2 + "." + suffix;
+            CompressImg.compressImageWithWH(imgFilePath, outImgPath, 128,128);
+            httpPath = path + fileName2 + "." + suffix;
+        }
+        long id= Long.parseLong(request.getParameter("id"));
+        //更新头像信息
+        Member member=manager.findById(id);
+        member.setAvatar(httpPath);
+        manager.update(member);
+        return  httpPath;
     }
 
 }

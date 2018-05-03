@@ -5,6 +5,7 @@
  */
 package com.quhaodian.adminstore.controller.front;
 
+import com.quhaodian.adminstore.utils.CompressImg;
 import com.quhaodian.plug.data.service.StorageService;
 import com.quhaodian.plug.data.vo.FileInfo;
 import org.apache.commons.fileupload.FileItemStream;
@@ -13,6 +14,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +28,14 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Controller - 文件处理
@@ -36,6 +43,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/file")
 public class FileController {
+
+
 
     @Autowired
     StorageService storageService;
