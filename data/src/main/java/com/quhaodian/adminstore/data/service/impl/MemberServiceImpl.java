@@ -1,5 +1,6 @@
 package com.quhaodian.adminstore.data.service.impl;
 
+import com.google.common.collect.Sets;
 import com.quhaodian.adminstore.data.dao.MemberDao;
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.data.core.Updater;
@@ -9,14 +10,20 @@ import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
 import com.quhaodian.data.utils.FilterUtils;
 import com.quhaodian.user.data.dao.UserAccountDao;
+import com.quhaodian.user.data.dao.UserInfoDao;
 import com.quhaodian.user.data.entity.UserAccount;
+import com.quhaodian.user.data.entity.UserInfo;
+import com.quhaodian.user.data.entity.UserRole;
 import com.quhaodian.user.data.vo.UserAccountVo;
 import com.quhaodian.adminstore.data.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -27,6 +34,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private UserAccountDao accountDao;
+
+    @Autowired
+    private UserInfoDao userInfoDao;
 
 
     @Override
@@ -110,6 +120,16 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public List<Member> findList(Integer first, Integer count, List<Filter> filters, List<Order> orders) {
         return dao.findList(first, count, filters, orders);
+    }
+
+    @Override
+    public UserInfo deleteUserAllRole(Long id) {
+        UserInfo entity = userInfoDao.findById(id);
+        if (entity != null) {
+            Set<UserRole> set=new HashSet();
+            entity.setRoles(set);
+        }
+        return entity;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.quhaodian.adminstore.data.service;
 
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.user.data.entity.UserAccount;
+import com.quhaodian.user.data.entity.UserInfo;
 import com.quhaodian.user.data.vo.UserAccountVo;
 import com.quhaodian.data.page.Filter;
 import com.quhaodian.data.page.Order;
@@ -36,5 +37,7 @@ public interface MemberService {
 
 
 	public List<Member> findList(Integer first, Integer count, List<Filter> filters, List<Order> orders);
+
+	UserInfo deleteUserAllRole(Long id);
 	
 }

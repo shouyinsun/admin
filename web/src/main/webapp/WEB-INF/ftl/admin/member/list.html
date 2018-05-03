@@ -137,17 +137,17 @@
 										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												<a  class="menubutton btn btn-sm btn-success" onclick="openDialog(${item.id},'${item.name}')"
+												<!--<a  class="menubutton btn btn-sm btn-success" onclick="openDialog(${item.id},'${item.name}')"
 													href="#">
 													<i class="fa fa-edit">推荐</i>
-												</a>
-												[@shiro.hasPermission name="member:update"]
+												</a>-->
+												[@shiro.hasPermission name="member/update"]
 												<a  class="menubutton btn btn-sm btn-success"
 													href="${siteurl}admin/member/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 													<i class="fa fa-edit">更新</i>
 												</a>
 												[/@shiro.hasPermission]
-												[@shiro.hasPermission name="member:delete"]
+												[@shiro.hasPermission name="member/delete"]
 												<a  class="menubutton btn btn-sm btn-danger"  onclick="return confirm('删除后无法恢复,确定要删除吗')"
 													href="${siteurl}admin/member/model_delete.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
 													<i class="fa fa-trash">删除</i>

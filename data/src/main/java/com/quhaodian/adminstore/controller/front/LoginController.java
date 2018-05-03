@@ -94,9 +94,12 @@ public class LoginController extends BaseController {
         UserAccountVo userx = userAccountService.reg(user);
         if (userx.getCode()==0) {
             model.addAttribute("msg", "注册成功");
+            //这里写死,注册之后赋予【观察者】角色
+            long userId=userx.getUser();
+            userInfoService.addRole(userId,2L);
             return "redirect:/login.htm";
         } else {
-            model.addAttribute("msg", "注册失败");
+            model.addAttribute("msg", "注册失败:"+userx.getMsg());
             return getView("register");
         }
 

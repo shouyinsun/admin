@@ -2,6 +2,7 @@ package com.quhaodian.adminstore.controller.admin;
 
 import com.quhaodian.data.utils.FilterUtils;
 import com.quhaodian.user.data.entity.UserAccount;
+import com.quhaodian.user.data.entity.UserRole;
 import com.quhaodian.user.data.service.UserInfoService;
 import com.quhaodian.user.data.service.UserRoleService;
 import com.quhaodian.user.data.vo.UserAccountVo;
@@ -142,6 +143,11 @@ public class MemberAction {
         String view = REDIRECT_LIST_HTML;
         try {
             manager.update(bean);
+            Member user=manager.findById(bean.getId());
+            //先删除用户的全部角色
+            if(null!=user.getRoles() && ! user.getRoles().isEmpty()){
+                manager.deleteUserAllRole(user.getId());
+            }
             if (roles != null) {
                 for (Long role : roles) {
                     userInfoService.addRole(bean.getId(), role);

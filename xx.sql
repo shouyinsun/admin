@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50173
+Source Server Version : 50717
 Source Host           : localhost:3306
 Source Database       : adminstore
 
 Target Server Type    : MYSQL
-Target Server Version : 50173
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-04-30 23:15:11
+Date: 2018-05-03 18:07:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,9 +37,9 @@ CREATE TABLE `area` (
   `state` int(11) DEFAULT NULL,
   `area_type` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKtn7all8h9e6fi9pspra60rht5` (`pid`),
-  -- CONSTRAINT `FKtn7all8h9e6fi9pspra60rht5` FOREIGN KEY (`pid`) REFERENCES `area` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKtn7all8h9e6fi9pspra60rht5` (`pid`),
+  CONSTRAINT `FKtn7all8h9e6fi9pspra60rht5` FOREIGN KEY (`pid`) REFERENCES `area` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -103,23 +103,25 @@ CREATE TABLE `menu` (
   `path` varchar(255) DEFAULT NULL,
   `permission` varchar(255) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKqcf9gem97gqa5qjm4d3elcqt5` (`pid`),
-  -- CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FKqcf9gem97gqa5qjm4d3elcqt5` (`pid`),
+  CONSTRAINT `FKqcf9gem97gqa5qjm4d3elcqt5` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu` VALUES ('1', '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', '1', '1', '根节点', '64', '0', null, null, null, null, null, null);
+INSERT INTO `menu` VALUES ('1', '2017-09-25 14:25:39', '', '1', '2017-09-25 14:25:39', '1', '1', '根节点', '68', '0', null, null, null, null, null, null);
 INSERT INTO `menu` VALUES ('2', '2017-11-09 14:19:34', null, '1,2', '2017-11-09 14:19:34', '2', '2', '系统设置', '21', '55', '0', 'fa  fa-gear', '0', '', '2', '1');
-INSERT INTO `menu` VALUES ('3', '2017-09-25 14:34:37', null, '1,2,3', '2017-09-25 14:34:37', '3', '3', '菜单管理', '4', '0', '0', 'fa  fa-reorder', '0', 'admin/menu/view_list.htm', 'menu', '2');
+INSERT INTO `menu` VALUES ('3', '2018-05-03 16:10:18', null, '1,2,3', '2018-05-03 16:10:18', '3', '3', '菜单权限管理', '4', '0', '0', 'fa  fa-reorder', '0', 'admin/menu/view_list.htm', 'menu', '2');
 INSERT INTO `menu` VALUES ('4', '2017-09-25 14:36:59', null, '1,2,4', '2017-09-25 14:36:59', '3', '5', '角色管理', '6', '0', '0', 'fa  fa-tree', '0', 'admin/userrole/view_list.htm', 'userrole', '2');
 INSERT INTO `menu` VALUES ('19', '2017-12-27 14:04:52', null, '1,19', '2017-12-27 14:04:52', '2', '38', '控制台', '39', '0', '0', 'fa fa-home', '0', 'admin/index.htm', '19', '1');
-INSERT INTO `menu` VALUES ('20', '2017-12-27 14:19:54', null, '1,20', '2017-12-27 14:19:54', '2', '40', '用户管理', '47', '0', '0', 'fa  fa-users', '0', '', '20', '1');
-INSERT INTO `menu` VALUES ('21', '2017-12-27 14:27:31', null, '1,20,21', '2017-12-27 14:27:31', '3', '41', '用户管理', '42', '0', '0', 'fa fa-user', '0', 'admin/member/view_list.htm', 'member', '20');
-INSERT INTO `menu` VALUES ('22', '2017-12-27 14:20:51', null, '1,20,22', '2017-12-27 14:20:51', '3', '43', '账号管理', '44', '0', '0', 'fa fa-list', '0', 'admin/useraccount/view_list.htm', 'useraccount', '20');
-INSERT INTO `menu` VALUES ('23', '2017-12-27 15:05:28', null, '1,20,23', '2017-12-27 15:05:28', '3', '45', '登陆日志', '46', '0', '0', 'fa fa-support', '0', 'admin/userloginlog/view_list.htm', 'userloginlog', '20');
+INSERT INTO `menu` VALUES ('20', '2017-12-27 14:19:54', null, '1,20', '2017-12-27 14:19:54', '2', '40', '用户管理', '51', '0', '0', 'fa  fa-users', '0', '', '20', '1');
+INSERT INTO `menu` VALUES ('21', '2018-05-03 14:30:29', null, '1,20,21', '2018-05-03 14:30:29', '3', '41', '用户信息', '46', '0', '0', 'fa fa-user', '0', 'admin/member/view_list.htm', 'member', '20');
+INSERT INTO `menu` VALUES ('22', '2017-12-27 14:20:51', null, '1,20,22', '2017-12-27 14:20:51', '3', '47', '账号管理', '48', '0', '0', 'fa fa-list', '0', 'admin/useraccount/view_list.htm', 'useraccount', '20');
+INSERT INTO `menu` VALUES ('23', '2017-12-27 15:05:28', null, '1,20,23', '2017-12-27 15:05:28', '3', '49', '登陆日志', '50', '0', '0', 'fa fa-support', '0', 'admin/userloginlog/view_list.htm', 'userloginlog', '20');
+INSERT INTO `menu` VALUES ('34', '2018-05-03 16:39:31', null, '1,20,21,34', '2018-05-03 16:39:31', '4', '42', '用户更新权限', '43', '1', '1', 'fa fa-circle-o', '0', 'admin/member/view_edit', 'member/update', '21');
+INSERT INTO `menu` VALUES ('35', '2018-05-03 16:39:40', null, '1,20,21,35', '2018-05-03 16:39:40', '4', '44', '用户删除权限', '45', '2', '1', 'fa fa-circle-o', '0', 'admin/member/model_delete', 'member/delete', '21');
 
 -- ----------------------------
 -- Table structure for plugin_config
@@ -148,8 +150,8 @@ CREATE TABLE `plugin_config_attribute` (
   `PluginConfig_id` bigint(20) NOT NULL,
   `attributes` varchar(255) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`PluginConfig_id`,`name`)
-  -- CONSTRAINT `FK9s4k66fykxc5x1oo58bg0ku82` FOREIGN KEY (`PluginConfig_id`) REFERENCES `plugin_config` (`id`)
+  PRIMARY KEY (`PluginConfig_id`,`name`),
+  CONSTRAINT `FK9s4k66fykxc5x1oo58bg0ku82` FOREIGN KEY (`PluginConfig_id`) REFERENCES `plugin_config` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -195,9 +197,9 @@ CREATE TABLE `site_app_version` (
   `versionCode` int(11) DEFAULT NULL,
   `versionName` varchar(255) DEFAULT NULL,
   `app_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FK9rgjxw6r5h7gf0e7ijfbademt` (`app_id`),
-  -- CONSTRAINT `FK9rgjxw6r5h7gf0e7ijfbademt` FOREIGN KEY (`app_id`) REFERENCES `site_app` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK9rgjxw6r5h7gf0e7ijfbademt` (`app_id`),
+  CONSTRAINT `FK9rgjxw6r5h7gf0e7ijfbademt` FOREIGN KEY (`app_id`) REFERENCES `site_app` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -244,9 +246,9 @@ CREATE TABLE `site_link` (
   `target` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `linkType_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FK1316ht5o7bmu4jbixoso45paa` (`linkType_id`),
-  -- CONSTRAINT `FK1316ht5o7bmu4jbixoso45paa` FOREIGN KEY (`linkType_id`) REFERENCES `site_link_type` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK1316ht5o7bmu4jbixoso45paa` (`linkType_id`),
+  CONSTRAINT `FK1316ht5o7bmu4jbixoso45paa` FOREIGN KEY (`linkType_id`) REFERENCES `site_link_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -269,9 +271,9 @@ CREATE TABLE `site_link_type` (
   `rgt` int(11) DEFAULT NULL,
   `sortNum` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKsve8aryqrci3acgot8k7rt6ix` (`pid`),
-  -- CONSTRAINT `FKsve8aryqrci3acgot8k7rt6ix` FOREIGN KEY (`pid`) REFERENCES `site_link_type` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKsve8aryqrci3acgot8k7rt6ix` (`pid`),
+  CONSTRAINT `FKsve8aryqrci3acgot8k7rt6ix` FOREIGN KEY (`pid`) REFERENCES `site_link_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -333,9 +335,9 @@ CREATE TABLE `task` (
   `state` int(11) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKqpj60iiafuf9b7dh5xtxoeusw` (`user_id`),
-  -- CONSTRAINT `FKqpj60iiafuf9b7dh5xtxoeusw` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKqpj60iiafuf9b7dh5xtxoeusw` (`user_id`),
+  CONSTRAINT `FKqpj60iiafuf9b7dh5xtxoeusw` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -350,9 +352,9 @@ DROP TABLE IF EXISTS `task_attribute`;
 CREATE TABLE `task_attribute` (
   `task_id` bigint(20) NOT NULL,
   `attr` varchar(100) DEFAULT NULL,
-  `name` varchar(36) NOT NULL
-  -- KEY `FKkkpewueys70bcx84x9yd2dsec` (`task_id`),
-  -- CONSTRAINT `FKkkpewueys70bcx84x9yd2dsec` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
+  `name` varchar(36) NOT NULL,
+  KEY `FKkkpewueys70bcx84x9yd2dsec` (`task_id`),
+  CONSTRAINT `FKkkpewueys70bcx84x9yd2dsec` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -370,9 +372,9 @@ CREATE TABLE `task_record` (
   `expensesTime` bigint(20) DEFAULT NULL,
   `note` varchar(20) DEFAULT NULL,
   `task_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKhcsb7k9mkjpq63wpmfopg0tty` (`task_id`),
-  -- CONSTRAINT `FKhcsb7k9mkjpq63wpmfopg0tty` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKhcsb7k9mkjpq63wpmfopg0tty` (`task_id`),
+  CONSTRAINT `FKhcsb7k9mkjpq63wpmfopg0tty` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -397,18 +399,17 @@ CREATE TABLE `user_account` (
   `salt` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKloyhlvrn82g8811wyjaa8ehm0` (`user_id`),
-  -- CONSTRAINT `FKloyhlvrn82g8811wyjaa8ehm0` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FKloyhlvrn82g8811wyjaa8ehm0` (`user_id`),
+  CONSTRAINT `FKloyhlvrn82g8811wyjaa8ehm0` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_account
 -- ----------------------------
-INSERT INTO `user_account` VALUES ('1', '2017-12-27 13:53:50', '2018-04-30 22:43:28', '2', '120', 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', '1');
-INSERT INTO `user_account` VALUES ('5', '2018-04-30 22:44:36', '2018-04-30 22:44:48', '2', '2', '6332ed647d0bb14d3bb3d23437d4520a7e4ca0cf', '4374b54ad7a254dc', 'xuchao', '1221');
-INSERT INTO `user_account` VALUES ('6', '2018-04-30 22:45:37', '2018-04-30 23:09:43', '2', '14', 'e6803d9350fa38ba77edc9384e97f33a1dee1d73', 'f456ecc7e1013223', 'xufu', '1222');
-INSERT INTO `user_account` VALUES ('7', '2018-04-30 23:06:13', '2018-04-30 23:06:20', '2', '2', '67f28a2976122f2cb8274aaf77d9179ae8bb384a', '433ac568dbdb34b8', 'xxxx', '1223');
+INSERT INTO `user_account` VALUES ('1', '2017-12-27 13:53:50', '2018-05-03 18:00:05', '2', '163', 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', '1');
+INSERT INTO `user_account` VALUES ('5', '2018-04-30 22:44:36', '2018-05-03 14:26:07', '2', '6', '6332ed647d0bb14d3bb3d23437d4520a7e4ca0cf', '4374b54ad7a254dc', 'xuchao', '1221');
+INSERT INTO `user_account` VALUES ('6', '2018-04-30 22:45:37', '2018-05-03 17:14:12', '2', '21', 'e6803d9350fa38ba77edc9384e97f33a1dee1d73', 'f456ecc7e1013223', 'xufu', '1222');
 
 -- ----------------------------
 -- Table structure for user_code
@@ -421,8 +422,8 @@ CREATE TABLE `user_code` (
   `code` varchar(255) DEFAULT NULL,
   `loginSize` int(11) DEFAULT NULL,
   `userid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKfulmxb2y8nrres564ymc2kqr4` (`userid`)
+  PRIMARY KEY (`id`),
+  KEY `FKfulmxb2y8nrres564ymc2kqr4` (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -447,9 +448,9 @@ CREATE TABLE `user_feedback` (
   `state` int(11) DEFAULT NULL,
   `title` varchar(100) DEFAULT NULL,
   `userid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKfjxq06hj1obi36glqqlbimt4g` (`userid`),
-  -- CONSTRAINT `FKfjxq06hj1obi36glqqlbimt4g` FOREIGN KEY (`userid`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKfjxq06hj1obi36glqqlbimt4g` (`userid`),
+  CONSTRAINT `FKfjxq06hj1obi36glqqlbimt4g` FOREIGN KEY (`userid`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -476,18 +477,17 @@ CREATE TABLE `user_info` (
   `note` varchar(255) DEFAULT NULL,
   `sex` varchar(5) DEFAULT NULL,
   `household_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FK3193uu2asgocbhkk1mus5wfd7` (`household_id`),
-  -- CONSTRAINT `FK3193uu2asgocbhkk1mus5wfd7` FOREIGN KEY (`household_id`) REFERENCES `area` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1224 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FK3193uu2asgocbhkk1mus5wfd7` (`household_id`),
+  CONSTRAINT `FK3193uu2asgocbhkk1mus5wfd7` FOREIGN KEY (`household_id`) REFERENCES `area` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1226 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('1', '2017-12-27 14:44:05', '2018-04-30 22:43:28', null, '0', '162', 'admin', null, '账号', null, null, null, null, null, null);
-INSERT INTO `user_info` VALUES ('1221', '2018-04-30 22:44:36', '2018-04-30 22:44:48', null, null, '1', 'xuchao', null, '账号', null, null, null, null, null, null);
-INSERT INTO `user_info` VALUES ('1222', '2018-04-30 23:05:00', '2018-04-30 23:09:43', null, '0', '2', 'xufu', null, '账号', null, null, null, null, null, null);
-INSERT INTO `user_info` VALUES ('1223', '2018-04-30 23:07:28', '2018-04-30 23:07:28', null, '0', '0', 'xxxx', null, '账号', null, null, null, null, null, null);
+INSERT INTO `user_info` VALUES ('1', '2017-12-27 14:44:05', '2018-05-03 18:00:05', null, '0', '207', 'admin', null, '账号', null, null, null, null, null, null);
+INSERT INTO `user_info` VALUES ('1221', '2018-04-30 22:44:36', '2018-05-03 14:26:07', null, null, '5', 'xuchao', null, '账号', null, null, null, null, null, null);
+INSERT INTO `user_info` VALUES ('1222', '2018-05-03 16:00:23', '2018-05-03 17:14:12', null, '0', '14', 'xufu2', null, '账号', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for user_info_attribute
@@ -497,8 +497,8 @@ CREATE TABLE `user_info_attribute` (
   `user_id` bigint(20) NOT NULL,
   `attr` varchar(100) DEFAULT NULL,
   `name` varchar(36) NOT NULL,
-  PRIMARY KEY (`user_id`,`name`)
-  -- CONSTRAINT `FKjf8g1vng9lpmniy8u187j7t0` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`user_id`,`name`),
+  CONSTRAINT `FKjf8g1vng9lpmniy8u187j7t0` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -529,10 +529,10 @@ DROP TABLE IF EXISTS `user_label_links`;
 CREATE TABLE `user_label_links` (
   `user_id` bigint(20) NOT NULL,
   `labels_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`user_id`,`labels_id`)
-  -- KEY `FKe69vxi1aiq7ww12d8pf03hrn1` (`labels_id`),
-  -- CONSTRAINT `FK5njpwjktgb87ggnjm63vejdwc` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
-  -- CONSTRAINT `FKe69vxi1aiq7ww12d8pf03hrn1` FOREIGN KEY (`labels_id`) REFERENCES `user_label` (`id`)
+  PRIMARY KEY (`user_id`,`labels_id`),
+  KEY `FKe69vxi1aiq7ww12d8pf03hrn1` (`labels_id`),
+  CONSTRAINT `FK5njpwjktgb87ggnjm63vejdwc` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `FKe69vxi1aiq7ww12d8pf03hrn1` FOREIGN KEY (`labels_id`) REFERENCES `user_label` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -552,10 +552,10 @@ CREATE TABLE `user_login_log` (
   `user_id` bigint(20) DEFAULT NULL,
   `account` varchar(255) DEFAULT NULL,
   `client` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKj91w0nnfocpdp796lr3ot4lxs` (`user_id`),
-  -- CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FKj91w0nnfocpdp796lr3ot4lxs` (`user_id`),
+  CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_login_log
@@ -570,9 +570,37 @@ INSERT INTO `user_login_log` VALUES ('27', '2018-04-30 23:00:11', '2018-04-30 23
 INSERT INTO `user_login_log` VALUES ('28', '2018-04-30 23:01:12', '2018-04-30 23:01:12', '127.0.0.1', '1', '1222', null, null);
 INSERT INTO `user_login_log` VALUES ('29', '2018-04-30 23:02:41', '2018-04-30 23:02:41', '127.0.0.1', '1', '1222', null, null);
 INSERT INTO `user_login_log` VALUES ('30', '2018-04-30 23:02:49', '2018-04-30 23:02:49', '127.0.0.1', '1', '1222', null, null);
-INSERT INTO `user_login_log` VALUES ('31', '2018-04-30 23:06:20', '2018-04-30 23:06:20', '127.0.0.1', '1', '1223', null, null);
 INSERT INTO `user_login_log` VALUES ('32', '2018-04-30 23:06:34', '2018-04-30 23:06:34', '127.0.0.1', '1', '1222', null, null);
 INSERT INTO `user_login_log` VALUES ('33', '2018-04-30 23:09:43', '2018-04-30 23:09:43', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('34', '2018-05-03 13:46:03', '2018-05-03 13:46:03', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('35', '2018-05-03 14:14:18', '2018-05-03 14:14:18', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('36', '2018-05-03 14:14:48', '2018-05-03 14:14:48', '127.0.0.1', '1', '1221', null, null);
+INSERT INTO `user_login_log` VALUES ('37', '2018-05-03 14:27:06', '2018-05-03 14:27:06', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('38', '2018-05-03 15:01:52', '2018-05-03 15:01:52', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('39', '2018-05-03 15:40:21', '2018-05-03 15:40:21', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('40', '2018-05-03 15:45:16', '2018-05-03 15:45:16', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('41', '2018-05-03 15:50:48', '2018-05-03 15:50:48', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('42', '2018-05-03 15:58:00', '2018-05-03 15:58:00', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('43', '2018-05-03 15:59:47', '2018-05-03 15:59:47', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('44', '2018-05-03 16:02:56', '2018-05-03 16:02:56', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('45', '2018-05-03 16:03:48', '2018-05-03 16:03:48', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('46', '2018-05-03 16:09:58', '2018-05-03 16:09:58', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('47', '2018-05-03 16:17:15', '2018-05-03 16:17:15', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('48', '2018-05-03 16:17:34', '2018-05-03 16:17:34', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('49', '2018-05-03 16:23:02', '2018-05-03 16:23:02', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('50', '2018-05-03 16:27:22', '2018-05-03 16:27:22', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('51', '2018-05-03 16:33:07', '2018-05-03 16:33:07', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('52', '2018-05-03 16:33:45', '2018-05-03 16:33:45', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('53', '2018-05-03 16:37:40', '2018-05-03 16:37:40', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('54', '2018-05-03 16:38:36', '2018-05-03 16:38:36', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('55', '2018-05-03 16:40:33', '2018-05-03 16:40:33', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('56', '2018-05-03 16:42:12', '2018-05-03 16:42:12', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('57', '2018-05-03 16:42:26', '2018-05-03 16:42:26', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('58', '2018-05-03 16:42:59', '2018-05-03 16:42:59', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('61', '2018-05-03 17:10:18', '2018-05-03 17:10:18', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('62', '2018-05-03 17:14:12', '2018-05-03 17:14:12', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('63', '2018-05-03 17:41:58', '2018-05-03 17:41:58', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('64', '2018-05-03 17:45:21', '2018-05-03 17:45:21', '127.0.0.1', '1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for user_message
@@ -586,11 +614,11 @@ CREATE TABLE `user_message` (
   `state` int(11) DEFAULT NULL,
   `subject_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKprww0bw44m48y4xxbkv13u5g7` (`subject_id`),
-  -- KEY `FKcu2q6axhu3g31g1vbuosec525` (`user_id`),
-  -- CONSTRAINT `FKcu2q6axhu3g31g1vbuosec525` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
-  -- CONSTRAINT `FKprww0bw44m48y4xxbkv13u5g7` FOREIGN KEY (`subject_id`) REFERENCES `user_message_subject` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKprww0bw44m48y4xxbkv13u5g7` (`subject_id`),
+  KEY `FKcu2q6axhu3g31g1vbuosec525` (`user_id`),
+  CONSTRAINT `FKcu2q6axhu3g31g1vbuosec525` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `FKprww0bw44m48y4xxbkv13u5g7` FOREIGN KEY (`subject_id`) REFERENCES `user_message_subject` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -609,11 +637,11 @@ CREATE TABLE `user_message_member` (
   `state` int(11) DEFAULT NULL,
   `subjectid` bigint(20) DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKq810ie1390jw6r2umbsvtpusf` (`subjectid`),
-  -- KEY `FK2lven49o6lj1fnlb47lwjs9g9` (`uid`),
-  -- CONSTRAINT `FK2lven49o6lj1fnlb47lwjs9g9` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`),
-  -- CONSTRAINT `FKq810ie1390jw6r2umbsvtpusf` FOREIGN KEY (`subjectid`) REFERENCES `user_message_subject` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKq810ie1390jw6r2umbsvtpusf` (`subjectid`),
+  KEY `FK2lven49o6lj1fnlb47lwjs9g9` (`uid`),
+  CONSTRAINT `FK2lven49o6lj1fnlb47lwjs9g9` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `FKq810ie1390jw6r2umbsvtpusf` FOREIGN KEY (`subjectid`) REFERENCES `user_message_subject` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -633,9 +661,9 @@ CREATE TABLE `user_message_subject` (
   `members` int(11) DEFAULT NULL,
   `subject` varchar(255) DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FK1i9f2ekhf4y4xk5cqwr0unb1i` (`uid`),
-  -- CONSTRAINT `FK1i9f2ekhf4y4xk5cqwr0unb1i` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK1i9f2ekhf4y4xk5cqwr0unb1i` (`uid`),
+  CONSTRAINT `FK1i9f2ekhf4y4xk5cqwr0unb1i` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -663,11 +691,11 @@ CREATE TABLE `user_notification` (
   `url` varchar(255) DEFAULT NULL,
   `authorid` bigint(20) DEFAULT NULL,
   `catalogid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKen7mn6n9j4ach4hyewfjakkg2` (`authorid`),
-  -- KEY `FK25yxc2g4kt2wk510uy05nr10f` (`catalogid`),
-  -- CONSTRAINT `FK25yxc2g4kt2wk510uy05nr10f` FOREIGN KEY (`catalogid`) REFERENCES `user_notification_catalog` (`id`),
-  -- CONSTRAINT `FKen7mn6n9j4ach4hyewfjakkg2` FOREIGN KEY (`authorid`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKen7mn6n9j4ach4hyewfjakkg2` (`authorid`),
+  KEY `FK25yxc2g4kt2wk510uy05nr10f` (`catalogid`),
+  CONSTRAINT `FK25yxc2g4kt2wk510uy05nr10f` FOREIGN KEY (`catalogid`) REFERENCES `user_notification_catalog` (`id`),
+  CONSTRAINT `FKen7mn6n9j4ach4hyewfjakkg2` FOREIGN KEY (`authorid`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -692,9 +720,9 @@ CREATE TABLE `user_notification_catalog` (
   `icon` varchar(255) DEFAULT NULL,
   `system` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKgftt45f6mnajuk0k4c8aya4ew` (`pid`),
-  -- CONSTRAINT `FKgftt45f6mnajuk0k4c8aya4ew` FOREIGN KEY (`pid`) REFERENCES `user_notification_catalog` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKgftt45f6mnajuk0k4c8aya4ew` (`pid`),
+  CONSTRAINT `FKgftt45f6mnajuk0k4c8aya4ew` FOREIGN KEY (`pid`) REFERENCES `user_notification_catalog` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -715,11 +743,11 @@ CREATE TABLE `user_notification_member` (
   `state` int(11) DEFAULT NULL,
   `notificationid` bigint(20) DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKolldeppu9xw9we1jwgcvpc6m7` (`notificationid`),
-  -- KEY `FKlatb6olq7rthe83lg86qovdqh` (`uid`),
-  -- CONSTRAINT `FKlatb6olq7rthe83lg86qovdqh` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`),
-  -- CONSTRAINT `FKolldeppu9xw9we1jwgcvpc6m7` FOREIGN KEY (`notificationid`) REFERENCES `user_notification` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKolldeppu9xw9we1jwgcvpc6m7` (`notificationid`),
+  KEY `FKlatb6olq7rthe83lg86qovdqh` (`uid`),
+  CONSTRAINT `FKlatb6olq7rthe83lg86qovdqh` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `FKolldeppu9xw9we1jwgcvpc6m7` FOREIGN KEY (`notificationid`) REFERENCES `user_notification` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5066 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -736,9 +764,9 @@ CREATE TABLE `user_notification_num` (
   `lastDate` datetime DEFAULT NULL,
   `mid` bigint(20) DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKmi0949b37eayfjjpvv421bmvy` (`uid`),
-  -- CONSTRAINT `FKmi0949b37eayfjjpvv421bmvy` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKmi0949b37eayfjjpvv421bmvy` (`uid`),
+  CONSTRAINT `FKmi0949b37eayfjjpvv421bmvy` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -755,9 +783,9 @@ CREATE TABLE `user_notification_time` (
   `addDate` datetime DEFAULT NULL,
   `lastDate` datetime DEFAULT NULL,
   `uid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FK5co2x7rgocx6fmbfptaknqxh8` (`uid`),
-  -- CONSTRAINT `FK5co2x7rgocx6fmbfptaknqxh8` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK5co2x7rgocx6fmbfptaknqxh8` (`uid`),
+  CONSTRAINT `FK5co2x7rgocx6fmbfptaknqxh8` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -801,9 +829,9 @@ CREATE TABLE `user_oauth_token` (
   `token_type` varchar(255) DEFAULT NULL,
   `uid` varchar(255) DEFAULT NULL,
   `userid` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKhco9s5j1bhp44w3mpt19kmi21` (`userid`),
-  -- CONSTRAINT `FKhco9s5j1bhp44w3mpt19kmi21` FOREIGN KEY (`userid`) REFERENCES `user_info` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKhco9s5j1bhp44w3mpt19kmi21` (`userid`),
+  CONSTRAINT `FKhco9s5j1bhp44w3mpt19kmi21` FOREIGN KEY (`userid`) REFERENCES `user_info` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -823,17 +851,16 @@ CREATE TABLE `user_role` (
   `name` varchar(100) NOT NULL,
   `roleType` int(11) DEFAULT NULL,
   `catalog_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKrwtb6ktd4x1qi6sjjiu3134a1` (`catalog_id`),
-  -- CONSTRAINT `FKrwtb6ktd4x1qi6sjjiu3134a1` FOREIGN KEY (`catalog_id`) REFERENCES `user_role_catalog` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKrwtb6ktd4x1qi6sjjiu3134a1` (`catalog_id`),
+  CONSTRAINT `FKrwtb6ktd4x1qi6sjjiu3134a1` FOREIGN KEY (`catalog_id`) REFERENCES `user_role_catalog` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('1', '2018-04-30 23:01:04', '2018-04-30 23:01:04', '', '', 'admin', '0', '2');
-INSERT INTO `user_role` VALUES ('2', '2018-04-30 23:04:05', '2018-04-30 23:04:05', 'observer', 'observer', 'observer', '1', '3');
-INSERT INTO `user_role` VALUES ('3', '2018-04-30 23:10:13', '2018-04-30 23:10:13', '', '', '', null, '2');
+INSERT INTO `user_role` VALUES ('1', '2018-05-03 16:41:37', '2018-05-03 16:41:37', 'admin', '管理员', 'admin', '0', '2');
+INSERT INTO `user_role` VALUES ('2', '2018-05-03 17:14:02', '2018-05-03 17:14:02', 'observer', '观察者', 'observer', '1', '3');
 
 -- ----------------------------
 -- Table structure for user_role_authority
@@ -841,9 +868,9 @@ INSERT INTO `user_role` VALUES ('3', '2018-04-30 23:10:13', '2018-04-30 23:10:13
 DROP TABLE IF EXISTS `user_role_authority`;
 CREATE TABLE `user_role_authority` (
   `role_id` bigint(20) NOT NULL,
-  `permission` varchar(100) DEFAULT NULL
-  -- KEY `FKo6xok4ngrsuacqkyjpqbykn9l` (`role_id`),
-  -- CONSTRAINT `FKo6xok4ngrsuacqkyjpqbykn9l` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`)
+  `permission` varchar(100) DEFAULT NULL,
+  KEY `FKo6xok4ngrsuacqkyjpqbykn9l` (`role_id`),
+  CONSTRAINT `FKo6xok4ngrsuacqkyjpqbykn9l` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -852,15 +879,16 @@ CREATE TABLE `user_role_authority` (
 INSERT INTO `user_role_authority` VALUES ('1', '19');
 INSERT INTO `user_role_authority` VALUES ('1', '20');
 INSERT INTO `user_role_authority` VALUES ('1', 'member');
+INSERT INTO `user_role_authority` VALUES ('1', 'member/update');
+INSERT INTO `user_role_authority` VALUES ('1', 'member/delete');
 INSERT INTO `user_role_authority` VALUES ('1', 'useraccount');
 INSERT INTO `user_role_authority` VALUES ('1', 'userloginlog');
-INSERT INTO `user_role_authority` VALUES ('1', '90');
 INSERT INTO `user_role_authority` VALUES ('1', '2');
 INSERT INTO `user_role_authority` VALUES ('1', 'menu');
 INSERT INTO `user_role_authority` VALUES ('1', 'userrole');
-INSERT INTO `user_role_authority` VALUES ('1', 'userrolecatalog');
-INSERT INTO `user_role_authority` VALUES ('1', 'tmpl');
 INSERT INTO `user_role_authority` VALUES ('2', '19');
+INSERT INTO `user_role_authority` VALUES ('2', '20');
+INSERT INTO `user_role_authority` VALUES ('2', 'member');
 
 -- ----------------------------
 -- Table structure for user_role_catalog
@@ -878,9 +906,9 @@ CREATE TABLE `user_role_catalog` (
   `rgt` int(11) DEFAULT NULL,
   `sortNum` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  -- KEY `FKkk8xoshxnvrtd39dd20k4vi85` (`pid`),
-  -- CONSTRAINT `FKkk8xoshxnvrtd39dd20k4vi85` FOREIGN KEY (`pid`) REFERENCES `user_role_catalog` (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FKkk8xoshxnvrtd39dd20k4vi85` (`pid`),
+  CONSTRAINT `FKkk8xoshxnvrtd39dd20k4vi85` FOREIGN KEY (`pid`) REFERENCES `user_role_catalog` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -897,10 +925,10 @@ DROP TABLE IF EXISTS `user_role_links`;
 CREATE TABLE `user_role_links` (
   `user_id` bigint(20) NOT NULL,
   `roles_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`user_id`,`roles_id`)
-  -- KEY `FKpm1oweb01msxxqf212qmd0984` (`roles_id`),
-  -- CONSTRAINT `FK3r2sf8531lbjt40y3qjhkg2an` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
-  -- CONSTRAINT `FKpm1oweb01msxxqf212qmd0984` FOREIGN KEY (`roles_id`) REFERENCES `user_role` (`id`)
+  PRIMARY KEY (`user_id`,`roles_id`),
+  KEY `FKpm1oweb01msxxqf212qmd0984` (`roles_id`),
+  CONSTRAINT `FK3r2sf8531lbjt40y3qjhkg2an` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`),
+  CONSTRAINT `FKpm1oweb01msxxqf212qmd0984` FOREIGN KEY (`roles_id`) REFERENCES `user_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -908,9 +936,7 @@ CREATE TABLE `user_role_links` (
 -- ----------------------------
 INSERT INTO `user_role_links` VALUES ('1', '1');
 INSERT INTO `user_role_links` VALUES ('1221', '1');
-INSERT INTO `user_role_links` VALUES ('1222', '1');
 INSERT INTO `user_role_links` VALUES ('1222', '2');
-INSERT INTO `user_role_links` VALUES ('1223', '2');
 
 -- ----------------------------
 -- Table structure for user_verification
