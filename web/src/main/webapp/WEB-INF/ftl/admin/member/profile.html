@@ -17,6 +17,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="${siteurl}plugins/sweetalert/sweetalert.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,6 +46,19 @@
     <link rel="stylesheet" href="${siteurl}plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css">
     <script src="${siteurl}plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="${siteurl}plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src="${siteurl}plugins/sweetalert/sweetalert.min.js"></script>
+    <style>
+        .clearfix:after{
+            display: block;
+            clear: both;
+            content: "";
+            visibility: hidden;
+            height: 0;
+        }
+        .clearfix{
+            zoom:1;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -100,10 +114,14 @@
                     <!-- Profile Image -->
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                           <!-- <img class="profile-user-img img-responsive img-circle"
-                                 src="../../dist/img/user4-128x128.jpg" alt="用户头像" title="点击更换头像" style="cursor: pointer">-->
-                            <img class="profile-user-img img-responsive img-circle"
+                            [@shiro.hasPermission name="member/update"]
+                            <img class="profile-user-img  profile-img-circle img-responsive img-circle"
                                  src="${siteurl}${model.avatar!'dist/img/user4-128x128.jpg'}" alt="用户头像" title="点击更换头像" style="cursor: pointer">
+                            [/@shiro.hasPermission]
+                            [@shiro.lacksPermission name="member/update"]
+                            <img class="profile-user-img img-responsive img-circle"
+                                 src="${siteurl}${model.avatar!'dist/img/user4-128x128.jpg'}" alt="用户头像" title="" style="cursor: default">
+                            [/@shiro.lacksPermission]
                             <input type="file" class="img-select-input" name="fileToUpload" id="fileToUpload" onchange="return upLoad()" accept="image/*" style="
                                 height: 100px;
                                 position: relative;
@@ -115,64 +133,64 @@
                                 display: none;
                             ">
 
-                            <h3 class="profile-username text-center">Nina Mcintire</h3>
+                            <h3 class="profile-username text-center">${model.name}</h3>
 
-                            <p class="text-muted text-center">Software Engineer</p>
+                            <p class="text-muted text-center">${model.attributes.email!''}</p>
 
-                            <!--<ul class="list-group list-group-unbordered">
-                                <li class="list-group-item">
-                                    <b>Followers</b> <a class="pull-right">1,322</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Following</b> <a class="pull-right">543</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Friends</b> <a class="pull-right">13,287</a>
-                                </li>
-                            </ul>
-
-                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
 
                     <!-- About Me Box -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">About Me</h3>
+                            <h3 class="box-title">关于Ta</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+                            <strong><i class="fa fa-book margin-r-5"></i> 教育背景</strong>
 
                             <p class="text-muted">
-                                B.S. in Computer Science from the University of Tennessee at Knoxville
+                                ${model.attributes.education!''}
                             </p>
 
                             <hr>
 
-                            <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> 位置</strong>
 
-                            <p class="text-muted">Malibu, California</p>
+                            <p class="text-muted">
+                                ${model.attributes.location!''}
+                            </p>
 
                             <hr>
 
-                            <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+                            <strong><i class="fa fa-pencil margin-r-5"></i> 标签</strong>
 
                             <p>
-                                <span class="label label-danger">UI Design</span>
-                                <span class="label label-success">Coding</span>
-                                <span class="label label-info">Javascript</span>
-                                <span class="label label-warning">PHP</span>
-                                <span class="label label-primary">Node.js</span>
+                                [#if model.attributes.tag??]
+                                    [#list model.attributes.tag?split(",") as tag]
+                                    [#if tag_index%4 == 0]
+                                    <span class="label label-success">${tag}</span>
+                                    [/#if]
+                                    [#if tag_index%4 == 1]
+                                    <span class="label label-info">${tag}</span>
+                                    [/#if]
+                                    [#if tag_index%4 == 2]
+                                    <span class="label label-warning">${tag}</span>
+                                    [/#if]
+                                    [#if tag_index%4 == 3]
+                                    <span class="label label-primary">${tag}</span>
+                                    [/#if]
+                                    [/#list]
+                                [/#if]
                             </p>
 
                             <hr>
 
-                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> 简介</strong>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                            <p>
+                                ${model.attributes.intro!''}
+                            </p>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -182,235 +200,69 @@
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="false">Activity</a>
-                            </li>
-                            <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Timeline</a></li>
-                            <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
+                            <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">论文发表</a></li>
+                            [@shiro.hasPermission name="member/update"]
+                            <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true">个人信息</a></li>
+                            [/@shiro.hasPermission]
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="activity">
-                                <!-- Post -->
-                                <div class="post">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg"
-                                             alt="user image">
-                                        <span class="username">
-                                          <a href="#">Jonathan Burke Jr.</a>
-                                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                                        </span>
-                                        <span class="description">Shared publicly - 7:30 PM today</span>
-                                    </div>
-                                    <!-- /.user-block -->
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore the hate as they create awesome
-                                        tools to help create filler text for everyone from bacon lovers
-                                        to Charlie Sheen fans.
-                                    </p>
-                                    <ul class="list-inline">
-                                        <li><a href="#" class="link-black text-sm"><i
-                                                class="fa fa-share margin-r-5"></i> Share</a></li>
-                                        <li><a href="#" class="link-black text-sm"><i
-                                                class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                        </li>
-                                        <li class="pull-right">
-                                            <a href="#" class="link-black text-sm"><i
-                                                    class="fa fa-comments-o margin-r-5"></i> Comments
-                                                (5)</a></li>
-                                    </ul>
-
-                                    <input class="form-control input-sm" placeholder="Type a comment" type="text">
-                                </div>
-                                <!-- /.post -->
-
-                                <!-- Post -->
-                                <div class="post clearfix">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg"
-                                             alt="User Image">
-                                        <span class="username">
-                                          <a href="#">Sarah Ross</a>
-                                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                                        </span>
-                                        <span class="description">Sent you a message - 3 days ago</span>
-                                    </div>
-                                    <!-- /.user-block -->
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore the hate as they create awesome
-                                        tools to help create filler text for everyone from bacon lovers
-                                        to Charlie Sheen fans.
-                                    </p>
-
-                                    <form class="form-horizontal">
-                                        <div class="form-group margin-bottom-none">
-                                            <div class="col-sm-9">
-                                                <input class="form-control input-sm" placeholder="Response">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <button type="submit"
-                                                        class="btn btn-danger pull-right btn-block btn-sm">Send
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /.post -->
-
-                                <!-- Post -->
-                                <div class="post">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg"
-                                             alt="User Image">
-                                        <span class="username">
-                                          <a href="#">Adam Jones</a>
-                                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                                        </span>
-                                        <span class="description">Posted 5 photos - 5 days ago</span>
-                                    </div>
-                                    <!-- /.user-block -->
-                                    <div class="row margin-bottom">
-                                        <div class="col-sm-6">
-                                            <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                                        </div>
-                                        <!-- /.col -->
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <img class="img-responsive" src="../../dist/img/photo2.png"
-                                                         alt="Photo">
-                                                    <br>
-                                                    <img class="img-responsive" src="../../dist/img/photo3.jpg"
-                                                         alt="Photo">
-                                                </div>
-                                                <!-- /.col -->
-                                                <div class="col-sm-6">
-                                                    <img class="img-responsive" src="../../dist/img/photo4.jpg"
-                                                         alt="Photo">
-                                                    <br>
-                                                    <img class="img-responsive" src="../../dist/img/photo1.png"
-                                                         alt="Photo">
-                                                </div>
-                                                <!-- /.col -->
-                                            </div>
-                                            <!-- /.row -->
-                                        </div>
-                                        <!-- /.col -->
-                                    </div>
-                                    <!-- /.row -->
-
-                                    <ul class="list-inline">
-                                        <li><a href="#" class="link-black text-sm"><i
-                                                class="fa fa-share margin-r-5"></i> Share</a></li>
-                                        <li><a href="#" class="link-black text-sm"><i
-                                                class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                        </li>
-                                        <li class="pull-right">
-                                            <a href="#" class="link-black text-sm"><i
-                                                    class="fa fa-comments-o margin-r-5"></i> Comments
-                                                (5)</a></li>
-                                    </ul>
-
-                                    <input class="form-control input-sm" placeholder="Type a comment" type="text">
-                                </div>
-                                <!-- /.post -->
-                            </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="timeline">
+                            <div class="tab-pane active" id="timeline">
                                 <!-- The timeline -->
+                                [@shiro.hasPermission name="member/update"]
+                                <div class="timeline-footer" style="margin-bottom: 30px;margin-top: 20px;">
+                                    <a class="btn btn-primary btn-flat btn-lg" href="/web/admin/member/view_paper_add.htm?id=${model.id!''}">
+                                        <i class="fa  fa-plus"></i> 添加论文
+                                    </a>
+                                </div>
+                                [/@shiro.hasPermission]
                                 <ul class="timeline timeline-inverse">
-                                    <!-- timeline time label -->
+
+                                    [#if paperList??]
+                                    [#list paperList as item]
+                                    [#if item_index%4 == 0]
                                     <li class="time-label">
-                                        <span class="bg-red">
-                                          10 Feb. 2014
-                                        </span>
+                                        <span class="bg-red" id="postDateSpan${item_index}">${item.postDate!''}</span>
                                     </li>
-                                    <!-- /.timeline-label -->
-                                    <!-- timeline item -->
-                                    <li>
-                                        <i class="fa fa-envelope bg-blue"></i>
-
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                                            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email
-                                            </h3>
-
-                                            <div class="timeline-body">
-                                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                                weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                                quora plaxo ideeli hulu weebly balihoo...
-                                            </div>
-                                            <div class="timeline-footer">
-                                                <a class="btn btn-primary btn-xs">Read more</a>
-                                                <a class="btn btn-danger btn-xs">Delete</a>
-                                            </div>
-                                        </div>
+                                    [/#if]
+                                    [#if item_index%4 == 1]
+                                    <li class="time-label">
+                                        <span class="bg-green" id="postDateSpan${item_index}">${item.postDate!''}</span>
                                     </li>
-                                    <!-- END timeline item -->
-                                    <!-- timeline item -->
+                                    [/#if]
+                                    [#if item_index%4 == 2]
+                                    <li class="time-label">
+                                        <span class="bg-yellow" id="postDateSpan${item_index}">${item.postDate!''}</span>
+                                    </li>
+                                    [/#if]
+                                    [#if item_index%4 == 3]
+                                    <li class="time-label">
+                                        <span class="bg-blue" id="postDateSpan${item_index}">${item.postDate!''}</span>
+                                    </li>
+                                    [/#if]
                                     <li>
                                         <i class="fa fa-user bg-aqua"></i>
 
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+                                            <!--<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>-->
 
-                                            <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted
-                                                your friend request
-                                            </h3>
-                                        </div>
-                                    </li>
-                                    <!-- END timeline item -->
-                                    <!-- timeline item -->
-                                    <li>
-                                        <i class="fa fa-comments bg-yellow"></i>
-
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                                            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post
+                                            <h3 class="timeline-header"><a href="#" class="titleHref${item_index}">${item.title!''}</a> ${item.author!''}
                                             </h3>
 
                                             <div class="timeline-body">
-                                                Take me to your leader!
-                                                Switzerland is small and neutral!
-                                                We are more like Germany, ambitious and misunderstood!
+                                                ${item.summary!''}
                                             </div>
                                             <div class="timeline-footer">
-                                                <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                                                <a class="btn btn-primary btn-xs" href="${siteurl}${item.fileDir}" target="_blank">Read more</a>
+                                                [@shiro.hasPermission name="member/update"]
+                                                <a class="btn btn-danger btn-xs deleteBtn" id="deleteBtn${item_index}">Delete</a>
+                                                [/@shiro.hasPermission]
                                             </div>
                                         </div>
                                     </li>
-                                    <!-- END timeline item -->
-                                    <!-- timeline time label -->
-                                    <li class="time-label">
-                                        <span class="bg-green">
-                                          3 Jan. 2014
-                                        </span>
-                                    </li>
-                                    <!-- /.timeline-label -->
-                                    <!-- timeline item -->
-                                    <li>
-                                        <i class="fa fa-camera bg-purple"></i>
+                                    [/#list]
+                                    [/#if]
 
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                                            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos
-                                            </h3>
-
-                                            <div class="timeline-body">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!-- END timeline item -->
                                     <li>
                                         <i class="fa fa-clock-o bg-gray"></i>
                                     </li>
@@ -419,51 +271,59 @@
                             <!-- /.tab-pane -->
 
                             <div class="tab-pane " id="settings">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" action="${siteurl}admin/member/updateInfo.htm" method="post">
+                                    <input type="hidden" name="id" value=${model.id}>
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                        <label  class="col-sm-2 control-label">邮箱</label>
 
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputName" placeholder="Name" type="email">
+                                            <input class="form-control" id="inputEmail" name="email" placeholder=""
+                                                   type="email" value="${model.attributes.email!''}">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
+                                        <label  class="col-sm-2 control-label">性别</label>
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputEmail" placeholder="Email"
-                                                   type="email">
+                                            <select class="form-control" id="inputSex" name="sex">
+                                                <option value="男" selected>男</option>
+                                                <option value="女">女</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+                                        <label  class="col-sm-2 control-label">教育背景</label>
 
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" id="inputExperience"
-                                                      placeholder="Experience"></textarea>
+                                            <textarea class="form-control" id="inputExperience" name="education"
+                                                      placeholder="" >${model.attributes.education!''}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+                                        <label  class="col-sm-2 control-label">位置</label>
 
                                         <div class="col-sm-10">
-                                            <input class="form-control" id="inputSkills" placeholder="Skills"
-                                                   type="text">
+                                            <input class="form-control" id="inputSkills" placeholder="" name="location"
+                                                   type="text" value="${model.attributes.location!''}">
                                         </div>
                                     </div>
-                                    <!--<div class="form-group">
+                                    <div class="form-group">
+                                        <label  class="col-sm-2 control-label">标签</label>
+
+                                        <div class="col-sm-10">
+                                            <input class="form-control" id="inputName" placeholder="多个用逗号隔开" name="tag" type="text" value="${model.attributes.tag!''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-sm-2 control-label">简介</label>
+
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="" name="intro"
+                                                      placeholder="" >${model.attributes.intro!''}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> I agree to the <a href="#">terms and
-                                                    conditions</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>-->
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                            <button type="submit" class="btn btn-danger">保存</button>
                                         </div>
                                     </div>
                                 </form>
@@ -494,7 +354,16 @@
 <!-- ./wrapper -->
 
 <script>
-    $('.profile-user-img').click(function(){
+
+    $(function(){
+        var sex="${model.sex!}";
+        if(sex!=null && sex!=''){
+            $("#inputSex").find("option[value="+sex+"]").attr("selected",true);
+        }
+    });
+
+
+    $('.profile-img-circle').click(function(){
         $('.img-select-input').trigger('click');
     });
 
@@ -508,7 +377,7 @@
             return;
         }
         if(src.indexOf('.jpg')<0&&src.indexOf('.jpeg')<0&&src.indexOf('.gif')<0&&src.indexOf('.bmp')<0&&src.indexOf('.png')<0&&src.indexOf('.psd')<0&&src.indexOf('.ico')<0){
-            alert("请选择图片!")
+            swal("Oops!", "请选择图片!", "error");
             $('.img-select-input').val('');
             return;
         }
@@ -518,7 +387,7 @@
             filesize = fileToUpload.files[0].size;
         }
         if(filesize>=1024*1024){
-            alert("图片过大,超过1M");
+            swal("Oops!", "图片过大,超过1M", "error");
             $('.img-select-input').val('');
             return;
         }
@@ -531,7 +400,7 @@
             {
                 if(imgDest!=null){
                     if('error'==imgDest){
-                        alert("修改头像错误");
+                        swal("Oops!", "修改头像错误", "error");
                         $('.img-select-input').val('');
                     }else{
                         $('.profile-user-img').attr('src',${siteurl}+imgDest)
@@ -542,11 +411,41 @@
             },
             error: function ()
             {
-                alert("修改头像错误");
+                swal("Oops!", "修改头像错误", "error");
                 $('.img-select-input').val('');
             }
         });
     }
+
+
+    $('.deleteBtn').click(function(){//删除 论文
+        var idLab=$(this).attr('id');
+        var index=idLab.substring(9);
+        var postDate=$('#postDateSpan'+index).text();
+        var title=$('.titleHref'+index).text();
+
+        var id="${model.id}";
+        var params={};
+        params.postDate=postDate;
+        params.title=title;
+
+        $.ajax({
+            type : "post",
+            url : "delPaper.htm?id="+id,
+            data : JSON.stringify(params),
+            contentType: "application/json",
+            async : false,
+            success : function(data){
+                if(data =="ok"){
+                    window.location.href=${siteurl}+'admin/member/profile.htm?id='+id;
+                }
+            },
+            error: function ()
+            {
+                swal("Oops!", "删除论文错误", "error");
+            }
+        });
+    });
 
 
 </script>

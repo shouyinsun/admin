@@ -1,5 +1,11 @@
 package com.quhaodian.adminstore.controller.admin;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.quhaodian.adminstore.data.entity.ModifyUser;
+import com.quhaodian.adminstore.data.entity.PaperInfo;
 import com.quhaodian.adminstore.utils.CompressImg;
 import com.quhaodian.data.utils.FilterUtils;
 import com.quhaodian.user.data.entity.UserAccount;
@@ -10,6 +16,8 @@ import com.quhaodian.user.data.vo.UserAccountVo;
 import com.quhaodian.adminstore.data.entity.Member;
 import com.quhaodian.adminstore.data.service.MemberService;
 import com.quhaodian.adminstore.data.so.MemberSo;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +26,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 import com.quhaodian.data.page.Order;
 import com.quhaodian.data.page.Page;
 import com.quhaodian.data.page.Pageable;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.annotation.Scope;
@@ -36,9 +41,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by imake on 2017年08月29日17:08:12.
@@ -64,6 +70,8 @@ public class MemberAction {
     @Autowired
     private UserInfoService userInfoService;
 
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,6 +79,7 @@ public class MemberAction {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
+    //用户列表页面
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/view_list")
     public String list(Pageable pageable, MemberSo so, ModelMap model) {
@@ -89,6 +98,7 @@ public class MemberAction {
         return "/admin/member/list";
     }
 
+    //添加用户页面
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/view_add")
     public String add(ModelMap model) {
@@ -96,6 +106,8 @@ public class MemberAction {
         return "/admin/member/add";
     }
 
+
+    //修改用户页面
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/view_edit")
     public String edit(Pageable pageable, Long id, ModelMap model) {
@@ -106,6 +118,7 @@ public class MemberAction {
         return "/admin/member/edit";
     }
 
+
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/view_view")
     public String view(Long id, ModelMap model) {
@@ -113,10 +126,21 @@ public class MemberAction {
         return "/admin/member/view";
     }
 
+    //用户简况页面
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/profile")
     public String profile(Long id, ModelMap model) {
-        model.addAttribute(MODEL, manager.findById(id));
+        Member member=manager.findById(id);
+        String allPaper=member.getIntroduce();
+        List<PaperInfo> paperList=Lists.newArrayList();
+        if(StringUtils.isNotEmpty(allPaper)){
+            Gson gson=new Gson();
+            Type type = new TypeToken<ArrayList<PaperInfo>>() {}.getType();
+            paperList= gson.fromJson(allPaper,type);
+        }
+        //论文列表
+        model.addAttribute("paperList",paperList);
+        model.addAttribute(MODEL,member);
         return "/admin/member/profile";
     }
 
@@ -146,6 +170,8 @@ public class MemberAction {
         return view;
     }
 
+
+    //用户修改,包含角色修改
     @RequiresPermissions("member")
     @RequestMapping("/admin/member/model_update")
     public String update(Pageable pageable, Member bean, Long[] roles, RedirectAttributes redirectAttributes, ModelMap model) {
@@ -254,6 +280,203 @@ public class MemberAction {
         member.setAvatar(httpPath);
         manager.update(member);
         return  httpPath;
+    }
+
+    /*上传论文文件*/
+    @RequiresPermissions("member")
+    @RequestMapping(value = "/admin/member/uploadPaper",method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String uploadPaper(MultipartFile fileToUpload, HttpServletRequest request){
+        String serverPath = request.getSession()
+                .getServletContext().getRealPath("/");
+        String fileName = UUID.randomUUID().toString();
+        String path = "dist/paper/";
+        File dir = new File(serverPath + "dist/paper");
+        if (!dir.exists() && !dir.isDirectory()) {
+            dir.mkdir();
+        }
+        String httpPath = path + fileName + fileToUpload.getOriginalFilename();
+        String filePath = serverPath + httpPath;
+        File file = new File(filePath);
+        try {
+            fileToUpload.transferTo(file);
+        } catch (IOException e) {
+            log.error("文件转换错误",e);
+            return "error";
+        }
+        return  httpPath;
+    }
+
+
+
+    //更新用户属性
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/updateInfo")
+    public String updateInfo(ModifyUser user, RedirectAttributes redirectAttributes,ModelMap model) {
+
+        long id=user.getId();
+        Member member=manager.findById(id);
+        Map<String,String> attr= Maps.newHashMap();
+        if(StringUtils.isNotEmpty(user.getEmail())){
+            attr.put("email",user.getEmail());
+        }
+        if(StringUtils.isNotEmpty(user.getEducation())){
+            attr.put("education",user.getEducation());
+        }
+        if(StringUtils.isNotEmpty(user.getLocation())){
+            attr.put("location",user.getLocation());
+        }
+        if(StringUtils.isNotEmpty(user.getTag())){
+            attr.put("tag",user.getTag());
+        }
+        if(StringUtils.isNotEmpty(user.getIntro())){
+            attr.put("intro",user.getIntro());
+        }
+
+        member.setAttributes(attr);
+
+        if(StringUtils.isNotEmpty(user.getSex())){
+            member.setSex(user.getSex());
+        }
+
+        try {
+            manager.update(member);
+        } catch (DataIntegrityViolationException e) {
+            log.error("更新用户信息失败", e);
+            redirectAttributes.addFlashAttribute("erro", "更新用户信息失败!");
+        }
+
+        String allPaper=member.getIntroduce();
+        List<PaperInfo> paperList=Lists.newArrayList();
+        if(StringUtils.isNotEmpty(allPaper)){
+            Gson gson=new Gson();
+            Type type = new TypeToken<ArrayList<PaperInfo>>() {}.getType();
+            paperList= gson.fromJson(allPaper,type);
+        }
+        //论文列表
+        model.addAttribute("paperList",paperList);
+        model.addAttribute(MODEL, manager.findById(id));
+        return "/admin/member/profile";
+    }
+
+
+    //添加论文信息
+    @RequiresPermissions("member")
+    @RequestMapping(value="/admin/member/addPaper",method = RequestMethod.POST)
+    @ResponseBody
+    public String addPaper(@RequestBody PaperInfo paperInfo,HttpServletRequest request) {
+        long id= Long.parseLong(request.getParameter("id"));
+        Member member=manager.findById(id);
+        String allPaper=member.getIntroduce();
+        Gson gson=new Gson();
+        if(StringUtils.isEmpty(allPaper)){
+            List list= Lists.newArrayList();
+            list.add(paperInfo);
+            String paperStr=gson.toJson(list);
+            member.setIntroduce(paperStr);
+            try {
+                manager.update(member);
+            } catch (DataIntegrityViolationException e) {
+                log.error("更新用户信息失败", e);
+                return "error";
+            }
+        }else{
+            Type type = new TypeToken<ArrayList<PaperInfo>>() {}.getType();
+            List<PaperInfo> list= gson.fromJson(allPaper,type);
+            List newList=Lists.newArrayList();
+            try{
+                for(int i=0;i<list.size();i++){
+                    if(format.parse(list.get(i).getPostDate()).after(format.parse(paperInfo.getPostDate()))){
+                        newList.add(list.get(i));
+                    }else{
+                        newList.add(paperInfo);
+                        for(;i<list.size();i++){
+                            newList.add(list.get(i));
+                        }
+                        break;
+                    }
+                }
+                if(newList.size()==list.size()){
+                    newList.add(paperInfo);
+                }
+                String paperStr=gson.toJson(newList);
+                member.setIntroduce(paperStr);
+                try {
+                    manager.update(member);
+                } catch (DataIntegrityViolationException e) {
+                    log.error("更新用户信息失败", e);
+                    return "error";
+                }
+            }catch (ParseException e){
+                log.error("日期转换异常", e);
+                return "error";
+            }
+
+
+        }
+        return "ok";
+
+    }
+
+
+    //删除论文信息
+    @RequiresPermissions("member")
+    @RequestMapping(value = "/admin/member/delPaper",method = RequestMethod.POST)
+    @ResponseBody
+    public String delPaper(@RequestBody PaperInfo paperInfo,HttpServletRequest request) {
+        long id= Long.parseLong(request.getParameter("id"));
+        Member member=manager.findById(id);
+        String allPaper=member.getIntroduce();
+        Gson gson=new Gson();
+        if(StringUtils.isEmpty(allPaper)){
+            return "ok";
+        }else{
+            Type type = new TypeToken<ArrayList<PaperInfo>>() {}.getType();
+            List<PaperInfo> list= gson.fromJson(allPaper,type);
+            List newList=Lists.newArrayList();
+            try {
+                for(int i=0;i<list.size();i++){
+                    if(format.parse(list.get(i).getPostDate()).after(format.parse(paperInfo.getPostDate()))){
+                        newList.add(list.get(i));
+
+                    }else if(format.parse(list.get(i).getPostDate()).compareTo(format.parse(paperInfo.getPostDate()))==0){
+                        for(;i<list.size();i++){
+                            if(!list.get(i).getTitle().equals(paperInfo.getTitle())){
+                                newList.add(list.get(i));
+                            }
+                        }
+                        break;
+                    }
+                }
+                String paperStr="";
+                if(CollectionUtils.isNotEmpty(newList)){
+                    paperStr=gson.toJson(newList);
+                }
+                member.setIntroduce(paperStr);
+                try {
+                    manager.update(member);
+                } catch (DataIntegrityViolationException e) {
+                    log.error("更新用户信息失败", e);
+                    return "error";
+                }
+            }catch (ParseException e){
+                log.error("更新用户信息失败", e);
+                return "error";
+            }
+
+
+        }
+
+        return "ok";
+    }
+
+
+    @RequiresPermissions("member")
+    @RequestMapping("/admin/member/view_paper_add")
+    public String addPaperView(HttpServletRequest request, ModelMap model){
+        long id= Long.parseLong(request.getParameter("id"));
+        model.put("id",id);
+        return "/admin/member/addPaper";
     }
 
 }

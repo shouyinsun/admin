@@ -17,6 +17,7 @@
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="${siteurl}dist/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="${siteurl}plugins/sweetalert/sweetalert.css">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,6 +44,7 @@
 	<link rel="stylesheet" href="${siteurl}plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css">
 	<script src="${siteurl}plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script src="${siteurl}plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+	<script src="${siteurl}plugins/sweetalert/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -95,11 +97,13 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class=" box box-body">
+							[@shiro.hasPermission name="member/update"]
 							<div class="col-xs-2 ">
 								<a class="btn btn-primary" href="${siteurl}admin/member/view_add.htm">
 									<i class="fa  fa-plus"></i> 添加
 								</a>
 							</div>
+							[/@shiro.hasPermission]
 							<div class="col-xs-10 " style="padding-left: 0;">
 								<button type="submit" name="search" class="btn btn-success pull-right">
 									<i class="fa fa-search"></i> 搜索
@@ -117,11 +121,9 @@
 								<table class="table table-bordered table-hover dataTable">
 									<thead>
 									<tr role="row">
-										<td class="col-xs-2">姓名</td>
+										<td class="col-xs-2 text-center">姓名</td>
 										<td class="col-xs-1 text-center">性别</td>
-										<td class="col-xs-1 text-center">人才类型</td>
-										<td class="col-xs-1 text-center">推荐情况</td>
-										<td class="col-xs-2 text-center">个人介绍</td>
+										<td class="col-xs-2 text-center">邮箱</td>
 										<td class="col-xs-2 text-center">更新时间</td>
 										<td class="col-xs-3 text-center">操作</td>
 									</tr>
@@ -129,18 +131,13 @@
 									<tbody>
 									[#list list as item]
 									<tr id="trr${item.id}">
-										<td><a href="${siteurl}admin/member/profile.htm?id=${item.id}">${item.name!""}</a></td>
+										<td class="text-center"><a href="${siteurl}admin/member/profile.htm?id=${item.id}">${item.name!""}</a></td>
 										<td class="text-center">${item.sex!""}</td>
-										<td class="">${(item.memberType.name)!""}</td>
-										<td class="text-center">${item.recommendType!"未推荐"}</td>
-										<td class="">${(item.note)!""}</td>
+
+										<td class="text-center">${(item.attributes.email)!""}</td>
 										<td class="text-center">${(item.lastDate?string('yyyy-MM-dd HH:mm:ss'))!''}</td>
 										<td class="text-center">
 											<div style="display: inline-block;">
-												<!--<a  class="menubutton btn btn-sm btn-success" onclick="openDialog(${item.id},'${item.name}')"
-													href="#">
-													<i class="fa fa-edit">推荐</i>
-												</a>-->
 												[@shiro.hasPermission name="member/update"]
 												<a  class="menubutton btn btn-sm btn-success"
 													href="${siteurl}admin/member/view_edit.htm?id=${item.id}&pageNumber=${page.pageNumber!'1'}">
@@ -189,11 +186,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         [#if erro??]
-        alert("${erro}");
+        swal("Oops!", "${msg}", "error");
         [/#if]
 
 		[#if msg??]
-        alert("${msg}");
+        swal("Oops!", "${msg}", "error");
         [/#if]
     });
 </script>
@@ -242,13 +239,13 @@
 
 
             $('#expireDate').datepicker({
-                format: "yyyy-mm-dd",
-                todayBtn: true,
-                clearBtn: true,
-                language: "zh-CN",
-                calendarWeeks: true,
-                autoclose: true
-            });
+            format: "yyyy-mm-dd",
+            todayBtn: true,
+            clearBtn: true,
+            language: "zh-CN",
+            calendarWeeks: true,
+            autoclose: true
+        });
     });
 
     function openDialog(id,name) {

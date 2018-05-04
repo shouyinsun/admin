@@ -1,8 +1,8 @@
 package com.quhaodian.adminstore.data.service.impl;
 
-import com.google.common.collect.Sets;
 import com.quhaodian.adminstore.data.dao.MemberDao;
 import com.quhaodian.adminstore.data.entity.Member;
+import com.quhaodian.adminstore.data.service.MemberService;
 import com.quhaodian.data.core.Updater;
 import com.quhaodian.data.page.Filter;
 import com.quhaodian.data.page.Order;
@@ -15,13 +15,11 @@ import com.quhaodian.user.data.entity.UserAccount;
 import com.quhaodian.user.data.entity.UserInfo;
 import com.quhaodian.user.data.entity.UserRole;
 import com.quhaodian.user.data.vo.UserAccountVo;
-import com.quhaodian.adminstore.data.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -71,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
     public Member update(Member bean) {
         Updater<Member> updater = new Updater<Member>(bean);
         updater.exclude("attributes");
-        updater.exclude("roles");
+        //updater.exclude("roles");
         return dao.updateByUpdater(updater);
     }
 

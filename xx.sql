@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-05-03 18:07:20
+Date: 2018-05-04 22:34:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -402,14 +402,14 @@ CREATE TABLE `user_account` (
   PRIMARY KEY (`id`),
   KEY `FKloyhlvrn82g8811wyjaa8ehm0` (`user_id`),
   CONSTRAINT `FKloyhlvrn82g8811wyjaa8ehm0` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_account
 -- ----------------------------
-INSERT INTO `user_account` VALUES ('1', '2017-12-27 13:53:50', '2018-05-03 18:00:05', '2', '163', 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', '1');
-INSERT INTO `user_account` VALUES ('5', '2018-04-30 22:44:36', '2018-05-03 14:26:07', '2', '6', '6332ed647d0bb14d3bb3d23437d4520a7e4ca0cf', '4374b54ad7a254dc', 'xuchao', '1221');
-INSERT INTO `user_account` VALUES ('6', '2018-04-30 22:45:37', '2018-05-03 17:14:12', '2', '21', 'e6803d9350fa38ba77edc9384e97f33a1dee1d73', 'f456ecc7e1013223', 'xufu', '1222');
+INSERT INTO `user_account` VALUES ('1', '2017-12-27 13:53:50', '2018-05-04 22:25:00', '2', '265', 'b63e05a75d3c13c53becedeb885bda5b67a6664a', 'e1e8c5fab5a28e13', 'admin', '1');
+INSERT INTO `user_account` VALUES ('5', '2018-04-30 22:44:36', '2018-05-04 22:33:45', '2', '7', '6332ed647d0bb14d3bb3d23437d4520a7e4ca0cf', '4374b54ad7a254dc', 'xuchao', '1221');
+INSERT INTO `user_account` VALUES ('6', '2018-04-30 22:45:37', '2018-05-04 22:33:56', '2', '24', 'e6803d9350fa38ba77edc9384e97f33a1dee1d73', 'f456ecc7e1013223', 'xufu', '1222');
 
 -- ----------------------------
 -- Table structure for user_code
@@ -473,21 +473,21 @@ CREATE TABLE `user_info` (
   `registerType` varchar(20) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   `edge` varchar(255) DEFAULT NULL,
-  `introduce` varchar(255) DEFAULT NULL,
+  `introduce` varchar(4096) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `sex` varchar(5) DEFAULT NULL,
   `household_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK3193uu2asgocbhkk1mus5wfd7` (`household_id`),
   CONSTRAINT `FK3193uu2asgocbhkk1mus5wfd7` FOREIGN KEY (`household_id`) REFERENCES `area` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1226 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1223 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('1', '2017-12-27 14:44:05', '2018-05-03 18:00:05', null, '0', '207', 'admin', null, '账号', null, null, null, null, null, null);
-INSERT INTO `user_info` VALUES ('1221', '2018-04-30 22:44:36', '2018-05-03 14:26:07', null, null, '5', 'xuchao', null, '账号', null, null, null, null, null, null);
-INSERT INTO `user_info` VALUES ('1222', '2018-05-03 16:00:23', '2018-05-03 17:14:12', null, '0', '14', 'xufu2', null, '账号', null, null, null, null, null, null);
+INSERT INTO `user_info` VALUES ('1', '2017-12-27 14:44:05', '2018-05-04 22:25:00', 'dist/img/ba0a8179-9966-4ae5-8f68-8b4c7f2e1618_smaller.jpg', '0', '309', 'admin', null, '账号', null, null, '[{\"postDate\":\"2018-05-02\",\"fileDir\":\"dist/paper/89c4f4c9-9cc8-437c-9ece-9c0fb87d4a60徐甫-前端开发-校招简历.pdf\",\"title\":\"网络爬虫研究\",\"author\":\"cash xu\",\"summary\":\"网络爬虫（又被称为网页蜘蛛，网络机器人，在FOAF社区中间，更经常的称为网页追逐者），是一种按照一定的规则，自动地抓取万维网信息的程序或者脚本。另外一些不常使用的名字还有蚂蚁、自动索引、模拟程序或者蠕虫。\"}]', null, '男', null);
+INSERT INTO `user_info` VALUES ('1221', '2018-04-30 22:44:36', '2018-05-04 22:33:45', 'dist/img/e190e5b7-71b0-4e7f-baf2-ca09696cbe6a_smaller.jpg', '0', '6', 'xuchao', null, '账号', null, null, '[{\"postDate\":\"2018-05-31\",\"fileDir\":\"dist/paper/4c6bdac4-b599-4823-bd87-109d890c471d拍拍贷VPN登陆使用指南v3.pdf\",\"title\":\"大数据架构师之路-大数据解决方案\",\"author\":\"李楠 王安石\",\"summary\":\"随着乐视硬件抢购的不断升级，乐视集团支付面临的请求压力百倍乃至千倍的暴增。作为商品购买的最后一环，保证用户快速稳定的完成支付尤为重要。所以在15年11月，我们对整个支付系统进行了全面的架构升级，使之具备了每秒稳定处理10万订单的能力。为乐视生态各种形式的抢购秒杀活动提供了强有力的支撑。\"}]', null, '男', null);
+INSERT INTO `user_info` VALUES ('1222', '2018-05-03 16:00:23', '2018-05-04 22:33:56', 'dist/img/7a938134-e440-4f30-98c4-bc93e2d79c1a_smaller.jpg', '0', '20', 'xufu2', null, '账号', null, null, '[{\"postDate\":\"2018-05-02\",\"fileDir\":\"dist/paper/979782c1-5f1f-48ee-904b-bf10655b7918拍拍贷VPN登陆使用指南v3.pdf\",\"title\":\"大白话讲解遗传算法\",\"author\":\"赵二狗\",\"summary\":\"遗传算法（Genetic Algorithm）是模拟达尔文生物进化论的自然选择和遗传学机理的生物进化过程的计算模型，是一种通过模拟自然进化过程搜索最优解的方法。遗传算法是从代表问题可能潜在的解集的一个种群（population）开始的，而一个种群则由经过基因（gene）编码的一定数目的个体(individual)组成。每个个体实际上是染色体(chromosome)带有特征的实体。染色体作为遗传物质的主要载体，即多个基因的集合，其内部表现（即基因型）是某种基因组合，它决定了个体的形状的外部表现，如黑头发的特征是由染色体中控制这一特征的某种基因组合决定的。\"},{\"postDate\":\"2018-02-22\",\"fileDir\":\"dist/paper/1036a6b1-d386-45ec-aa7d-ad1e4dacc446徐甫-前端开发-校招简历.pdf\",\"title\":\"神经网络浅讲:从神经元到深度学习\",\"author\":\"赵日天\",\"summary\":\"人工神经网络（Artificial Neural Network，即ANN ），是20世纪80 年代以来人工智能领域兴起的研究热点。它从信息处理角度对人脑神经元网络进行抽象， 建立某种简单模型，按不同的连接方式组成不同的网络。在工程与学术界也常直接简称为神经网络或类神经网络。神经网络是一种运算模型，由大量的节点（或称神经元）之间相互联接构成。每个节点代表一种特定的输出函数，称为激励函数（activation function）\"},{\"postDate\":\"2018-01-16\",\"fileDir\":\"dist/paper/dbf2fedb-084f-42c8-b87e-cd671472f969徐甫-前端开发-校招简历.pdf\",\"title\":\"深度学习可行性研究\",\"author\":\"李夏三\",\"summary\":\"深度学习的概念源于人工神经网络的研究。含多隐层的多层感知器就是一种深度学习结构。深度学习通过组合低层特征形成更加抽象的高层表示属性类别或特征，以发现数据的分布式特征表示。 [1] \\n深度学习的概念由Hinton等人于2006年提出。基于深度置信网络(DBN)提出非监督贪心逐层训练算法，为解决深层结构相关的优化难题带来希望，随后提出多层自动编码器深层结构。此外Lecun等人提出的卷积神经网络是第一个真正多层结构学习算法，它利用空间相对关系减少参数数目以提高训练性能。\"}]', null, '男', null);
 
 -- ----------------------------
 -- Table structure for user_info_attribute
@@ -504,6 +504,21 @@ CREATE TABLE `user_info_attribute` (
 -- ----------------------------
 -- Records of user_info_attribute
 -- ----------------------------
+INSERT INTO `user_info_attribute` VALUES ('1', '复旦大学 经济管理', 'education');
+INSERT INTO `user_info_attribute` VALUES ('1', 'admin@admin.com', 'email');
+INSERT INTO `user_info_attribute` VALUES ('1', '管理员', 'intro');
+INSERT INTO `user_info_attribute` VALUES ('1', '江苏 南京', 'location');
+INSERT INTO `user_info_attribute` VALUES ('1', 'JAVA,PYTHON,SQL', 'tag');
+INSERT INTO `user_info_attribute` VALUES ('1221', '清华大学phd', 'education');
+INSERT INTO `user_info_attribute` VALUES ('1221', 'chao@qq.com', 'email');
+INSERT INTO `user_info_attribute` VALUES ('1221', '骑士总冠军', 'intro');
+INSERT INTO `user_info_attribute` VALUES ('1221', '上海 浦东', 'location');
+INSERT INTO `user_info_attribute` VALUES ('1221', 'Coding,PHP,Nodejs', 'tag');
+INSERT INTO `user_info_attribute` VALUES ('1222', '北京大学中文系  phd', 'education');
+INSERT INTO `user_info_attribute` VALUES ('1222', 'asdfidalsdafadsfl@qq.com', 'email');
+INSERT INTO `user_info_attribute` VALUES ('1222', '深度学习的概念源于人工神经网络的研究\r\n北京大学中文系 phd', 'intro');
+INSERT INTO `user_info_attribute` VALUES ('1222', '北京 海淀', 'location');
+INSERT INTO `user_info_attribute` VALUES ('1222', 'Coding,PHP,Nodejs,ios', 'tag');
 
 -- ----------------------------
 -- Table structure for user_label
@@ -555,7 +570,7 @@ CREATE TABLE `user_login_log` (
   PRIMARY KEY (`id`),
   KEY `FKj91w0nnfocpdp796lr3ot4lxs` (`user_id`),
   CONSTRAINT `FKj91w0nnfocpdp796lr3ot4lxs` FOREIGN KEY (`user_id`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_login_log
@@ -601,6 +616,67 @@ INSERT INTO `user_login_log` VALUES ('61', '2018-05-03 17:10:18', '2018-05-03 17
 INSERT INTO `user_login_log` VALUES ('62', '2018-05-03 17:14:12', '2018-05-03 17:14:12', '127.0.0.1', '1', '1222', null, null);
 INSERT INTO `user_login_log` VALUES ('63', '2018-05-03 17:41:58', '2018-05-03 17:41:58', '127.0.0.1', '1', '1', null, null);
 INSERT INTO `user_login_log` VALUES ('64', '2018-05-03 17:45:21', '2018-05-03 17:45:21', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('65', '2018-05-04 09:50:08', '2018-05-04 09:50:08', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('66', '2018-05-04 11:18:41', '2018-05-04 11:18:41', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('67', '2018-05-04 11:20:46', '2018-05-04 11:20:46', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('68', '2018-05-04 11:57:13', '2018-05-04 11:57:13', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('69', '2018-05-04 12:02:30', '2018-05-04 12:02:30', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('70', '2018-05-04 12:07:20', '2018-05-04 12:07:20', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('71', '2018-05-04 12:17:05', '2018-05-04 12:17:05', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('72', '2018-05-04 12:19:07', '2018-05-04 12:19:07', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('73', '2018-05-04 12:23:52', '2018-05-04 12:23:52', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('74', '2018-05-04 12:46:02', '2018-05-04 12:46:02', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('75', '2018-05-04 12:48:29', '2018-05-04 12:48:29', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('76', '2018-05-04 12:49:57', '2018-05-04 12:49:57', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('77', '2018-05-04 12:56:32', '2018-05-04 12:56:32', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('78', '2018-05-04 13:48:41', '2018-05-04 13:48:41', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('79', '2018-05-04 13:56:36', '2018-05-04 13:56:36', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('80', '2018-05-04 13:58:19', '2018-05-04 13:58:19', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('81', '2018-05-04 14:16:27', '2018-05-04 14:16:27', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('82', '2018-05-04 14:32:17', '2018-05-04 14:32:17', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('83', '2018-05-04 14:35:50', '2018-05-04 14:35:50', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('84', '2018-05-04 14:39:26', '2018-05-04 14:39:26', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('85', '2018-05-04 15:21:18', '2018-05-04 15:21:18', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('86', '2018-05-04 15:24:06', '2018-05-04 15:24:06', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('87', '2018-05-04 15:25:21', '2018-05-04 15:25:21', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('88', '2018-05-04 15:26:42', '2018-05-04 15:26:42', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('89', '2018-05-04 15:34:30', '2018-05-04 15:34:30', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('90', '2018-05-04 15:46:58', '2018-05-04 15:46:58', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('91', '2018-05-04 15:58:04', '2018-05-04 15:58:04', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('92', '2018-05-04 16:07:44', '2018-05-04 16:07:44', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('93', '2018-05-04 16:39:59', '2018-05-04 16:39:59', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('94', '2018-05-04 16:42:33', '2018-05-04 16:42:33', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('95', '2018-05-04 16:48:46', '2018-05-04 16:48:46', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('96', '2018-05-04 17:02:53', '2018-05-04 17:02:53', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('97', '2018-05-04 17:30:47', '2018-05-04 17:30:47', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('98', '2018-05-04 17:34:45', '2018-05-04 17:34:45', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('99', '2018-05-04 17:38:58', '2018-05-04 17:38:58', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('100', '2018-05-04 17:51:47', '2018-05-04 17:51:47', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('101', '2018-05-04 18:12:43', '2018-05-04 18:12:43', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('102', '2018-05-04 18:36:29', '2018-05-04 18:36:29', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('103', '2018-05-04 18:42:39', '2018-05-04 18:42:39', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('104', '2018-05-04 19:00:27', '2018-05-04 19:00:27', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('105', '2018-05-04 19:38:08', '2018-05-04 19:38:08', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('106', '2018-05-04 19:45:06', '2018-05-04 19:45:06', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('107', '2018-05-04 19:47:10', '2018-05-04 19:47:10', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('108', '2018-05-04 19:50:28', '2018-05-04 19:50:28', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('109', '2018-05-04 19:51:38', '2018-05-04 19:51:38', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('110', '2018-05-04 19:53:33', '2018-05-04 19:53:33', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('111', '2018-05-04 20:53:15', '2018-05-04 20:53:15', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('112', '2018-05-04 21:11:04', '2018-05-04 21:11:04', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('113', '2018-05-04 21:28:05', '2018-05-04 21:28:05', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('114', '2018-05-04 21:30:44', '2018-05-04 21:30:44', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('115', '2018-05-04 21:41:03', '2018-05-04 21:41:03', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('116', '2018-05-04 21:44:12', '2018-05-04 21:44:12', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('117', '2018-05-04 21:50:01', '2018-05-04 21:50:01', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('118', '2018-05-04 21:52:59', '2018-05-04 21:52:59', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('119', '2018-05-04 22:02:27', '2018-05-04 22:02:27', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('120', '2018-05-04 22:08:00', '2018-05-04 22:08:00', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('121', '2018-05-04 22:21:19', '2018-05-04 22:21:19', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('122', '2018-05-04 22:22:12', '2018-05-04 22:22:12', '127.0.0.1', '1', '1', null, null);
+INSERT INTO `user_login_log` VALUES ('123', '2018-05-04 22:25:20', '2018-05-04 22:25:20', '127.0.0.1', '1', '1222', null, null);
+INSERT INTO `user_login_log` VALUES ('124', '2018-05-04 22:33:45', '2018-05-04 22:33:45', '127.0.0.1', '1', '1221', null, null);
+INSERT INTO `user_login_log` VALUES ('125', '2018-05-04 22:33:56', '2018-05-04 22:33:56', '127.0.0.1', '1', '1222', null, null);
 
 -- ----------------------------
 -- Table structure for user_message
@@ -696,7 +772,7 @@ CREATE TABLE `user_notification` (
   KEY `FK25yxc2g4kt2wk510uy05nr10f` (`catalogid`),
   CONSTRAINT `FK25yxc2g4kt2wk510uy05nr10f` FOREIGN KEY (`catalogid`) REFERENCES `user_notification_catalog` (`id`),
   CONSTRAINT `FKen7mn6n9j4ach4hyewfjakkg2` FOREIGN KEY (`authorid`) REFERENCES `user_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_notification
@@ -748,7 +824,7 @@ CREATE TABLE `user_notification_member` (
   KEY `FKlatb6olq7rthe83lg86qovdqh` (`uid`),
   CONSTRAINT `FKlatb6olq7rthe83lg86qovdqh` FOREIGN KEY (`uid`) REFERENCES `user_info` (`id`),
   CONSTRAINT `FKolldeppu9xw9we1jwgcvpc6m7` FOREIGN KEY (`notificationid`) REFERENCES `user_notification` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5066 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_notification_member
@@ -854,13 +930,13 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`id`),
   KEY `FKrwtb6ktd4x1qi6sjjiu3134a1` (`catalog_id`),
   CONSTRAINT `FKrwtb6ktd4x1qi6sjjiu3134a1` FOREIGN KEY (`catalog_id`) REFERENCES `user_role_catalog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '2018-05-03 16:41:37', '2018-05-03 16:41:37', 'admin', '管理员', 'admin', '0', '2');
-INSERT INTO `user_role` VALUES ('2', '2018-05-03 17:14:02', '2018-05-03 17:14:02', 'observer', '观察者', 'observer', '1', '3');
+INSERT INTO `user_role` VALUES ('2', '2018-05-04 14:55:09', '2018-05-04 14:55:09', 'observer', '观察者', 'observer', '1', '3');
 
 -- ----------------------------
 -- Table structure for user_role_authority
